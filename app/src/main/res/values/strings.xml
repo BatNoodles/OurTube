@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">OurTube</string>
+    <string name="logo_description">Thematic communist propaganda</string>
+    <string name="ourtube">OurTube</string>
+    <string name="motto">Рабочие мира, объединяйтесь!</string>
+    <string name="yt_download">Download from Youtube</string>
+</resources>
