@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".youtubeSearch"></activity>
+        <activity android:name=".downloadOptions"></activity>
+        <activity android:name=".youtubeSearch" />
         <activity android:name=".YoutubeLink" />
         <activity android:name=".MainActivity">
             <intent-filter>
