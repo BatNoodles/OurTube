@@ -5,4 +5,6 @@
     <string name="motto">Рабочие мира, объединяйтесь!</string>
     <string name="download_from_youtube">Download Youtube link</string>
     <string name="search_for_video">Search for video</string>
+    <string name="video_url_hint">Enter Youtube video link</string>
+    <string name="download">Download</string>
 </resources>
