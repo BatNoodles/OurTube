@@ -38,6 +38,7 @@ public class YoutubeLink extends AppCompatActivity {
                             Intent downloadIntent = new Intent(YoutubeLink.this, DownloadOptions.class);
                             downloadIntent.putExtra("videoUrl", linkEditText.getText().toString());
                             startActivity(downloadIntent);
+                            finish();
                         }
                         else{
                             Toast myToast = Toast.makeText(YoutubeLink.this, "Not a valid Youtube Url", Toast.LENGTH_SHORT);
