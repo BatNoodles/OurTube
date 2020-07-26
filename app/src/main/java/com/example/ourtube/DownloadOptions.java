@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,7 +31,7 @@ public class DownloadOptions extends AppCompatActivity {
         Button btn = new Button(this);
         btnText += (file.getFormat().getHeight() == -1) ? file.getFormat().getAudioBitrate() + "kb/s" : file.getFormat().getHeight() + "p";
         btn.setText(btnText);
-
+        btn.setBackgroundResource(R.drawable.red_button);
         final LinearLayout recyclerView = findViewById(R.id.buttonLinearLayout);
 
         btn.setOnClickListener(new View.OnClickListener() {
