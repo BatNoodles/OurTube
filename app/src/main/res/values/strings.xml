@@ -3,5 +3,9 @@
     <string name="logo_description">Thematic communist propaganda</string>
     <string name="ourtube">OurTube</string>
     <string name="motto">Рабочие мира, объединяйтесь!</string>
-    <string name="yt_download">Download from Youtube</string>
+    <string name="download_from_youtube">Download Youtube link</string>
+    <string name="search_for_video">Search for video</string>
+    <string name="video_url_hint">Enter Youtube video link</string>
+    <string name="download">Download</string>
+    <string name="enter_search_term">Enter video name</string>
 </resources>
