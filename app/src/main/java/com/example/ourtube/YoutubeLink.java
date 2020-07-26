@@ -30,22 +30,14 @@ public class YoutubeLink extends AppCompatActivity {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new YouTubeExtractor(YoutubeLink.this){
+                String editContent = linkEditText.getText().toString();
+                if (editContent.equals("") != true){
+                    Intent downloadIntent = new Intent(YoutubeLink.this, DownloadOptions.class);
+                    downloadIntent.putExtra("videoUrl", editContent);
+                    startActivity(downloadIntent);
+                    finish();
+                }
 
-                    @Override
-                    protected void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta videoMeta) {
-                        if (ytFiles != null){
-                            Intent downloadIntent = new Intent(YoutubeLink.this, DownloadOptions.class);
-                            downloadIntent.putExtra("videoUrl", linkEditText.getText().toString());
-                            startActivity(downloadIntent);
-                            finish();
-                        }
-                        else{
-                            Toast myToast = Toast.makeText(YoutubeLink.this, "Not a valid Youtube Url", Toast.LENGTH_SHORT);
-                            myToast.show();
-                        }
-                    }
-                }.extract(linkEditText.getText().toString(), true, true);
 
             }
         });

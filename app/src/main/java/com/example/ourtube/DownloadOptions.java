@@ -58,6 +58,12 @@ public class DownloadOptions extends AppCompatActivity {
 
                     }
                 }
+                else{
+                    Toast myToast = Toast.makeText(DownloadOptions.this, "That link is invalid", Toast.LENGTH_SHORT);
+                    myToast.show();
+                    finish();
+                }
+
             }
         }.extract(url, true, true);
     }
