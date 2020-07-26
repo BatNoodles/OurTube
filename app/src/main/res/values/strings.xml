@@ -8,4 +8,5 @@
     <string name="video_url_hint">Enter Youtube video link</string>
     <string name="download">Download</string>
     <string name="enter_search_term">Enter video name</string>
+    <string name="text_temp">temp text</string>
 </resources>
