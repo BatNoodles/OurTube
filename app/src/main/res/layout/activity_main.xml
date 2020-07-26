@@ -42,7 +42,7 @@
 
     <Button
         android:id="@+id/ytLinkButton"
-        android:layout_width="205dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="96dp"
         android:background="@drawable/red_button"
@@ -57,7 +57,7 @@
 
     <Button
         android:id="@+id/ytSearchButton"
-        android:layout_width="205dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/red_button"
