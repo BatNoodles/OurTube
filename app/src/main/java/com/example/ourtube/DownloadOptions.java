@@ -2,8 +2,12 @@ package com.example.ourtube;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +25,7 @@ import at.huber.youtubeExtractor.YtFile;
 
 public class DownloadOptions extends AppCompatActivity {
 
-    public void addButton(final YtFile file){
+    public void addButton(final YtFile file, final String title){
         String btnText = file.getFormat().getExt() + " ";
         Button btn = new Button(this);
         btnText += (file.getFormat().getHeight() == -1) ? file.getFormat().getAudioBitrate() + "kb/s" : file.getFormat().getHeight() + "p";
@@ -32,7 +36,24 @@ public class DownloadOptions extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(file.getFormat().getExt() + " pressed");
+                finish();
+                String downloadUrl = file.getUrl();
+                String filename = title + "." + file.getFormat().getExt();
+
+                Toast myToast = Toast.makeText(DownloadOptions.this, "Downloading " + filename, Toast.LENGTH_SHORT);
+                myToast.show();
+
+                Uri uri = Uri.parse(downloadUrl);
+
+                DownloadManager.Request request = new DownloadManager.Request(uri);
+
+                request.allowScanningByMediaScanner();
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "OurTube/" + filename);
+
+                DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+
+                manager.enqueue(request);
             }
         });
 
@@ -73,34 +94,14 @@ public class DownloadOptions extends AppCompatActivity {
 
                     }
                     for (int i = 0; i < videoItags.size(); i++){
-                        addButton(ytFiles.get(videoItags.get(i)));
+                        addButton(ytFiles.get(videoItags.get(i)), videoMeta.getTitle());
                     }
                     for (int i = 0; i < audioItags.size(); i++){
-                        addButton((ytFiles.get(audioItags.get(i))));
+                        addButton((ytFiles.get(audioItags.get(i))), videoMeta.getTitle());
                     }
                     titleText.setText("File formats for: " + videoMeta.getTitle());
                     progressBar.setVisibility(View.GONE);
-//                    if (file != null){
-//                        String downloadUrl = file.getUrl();
-//                        String title = videoMeta.getTitle();
-//                        String filename = title + "." + file.getFormat().getExt();
-//                        Toast myToast = Toast.makeText(DownloadOptions.this, "Downloading " + filename, Toast.LENGTH_LONG);
-//                        myToast.show();
-//
-//                        Uri uri = Uri.parse(downloadUrl);
-//
-//                        DownloadManager.Request request = new DownloadManager.Request(uri);
-//
-//                        request.allowScanningByMediaScanner();
-//                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-//                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "OurTube/" + filename);
-//
-//                        DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-//
-//                        manager.enqueue(request);
-//                        finish();
-//
-//                    }
+
                 }
                 else{
                     Toast myToast = Toast.makeText(DownloadOptions.this, "That link is invalid", Toast.LENGTH_SHORT);
