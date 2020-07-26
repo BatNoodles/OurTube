@@ -125,7 +125,14 @@ public class DownloadOptions extends AppCompatActivity {
             myToast.show();
         }
         else{
-            final String url = intent.getStringExtra("videoUrl");
+            final String url;
+            if (savedInstanceState == null && Intent.ACTION_SEND.equals(getIntent().getAction()) && getIntent().getType() != null && "text/plain".equals(getIntent().getType())) {
+                url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            }
+            else{
+                url = intent.getStringExtra("videoUrl");
+            }
+
             downloadVideo(url);
 
 
