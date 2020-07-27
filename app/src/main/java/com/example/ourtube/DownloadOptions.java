@@ -80,7 +80,7 @@ public class DownloadOptions extends AppCompatActivity {
                         itag = ytFiles.keyAt(i);
                         YtFile tempFile =  ytFiles.get(itag);
                         if (tempFile.getFormat().getHeight() != -1){
-                            if (!videoFormats.contains(tempFile.getFormat().getHeight())){
+                            if (!videoFormats.contains(tempFile.getFormat().getHeight()) && !tempFile.getFormat().getExt().equals("webm")){
                                 videoFormats.add(tempFile.getFormat().getHeight());
                                 videoItags.add(itag);
                             }
