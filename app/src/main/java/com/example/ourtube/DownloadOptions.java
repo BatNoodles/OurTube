@@ -105,7 +105,7 @@ public class DownloadOptions extends AppCompatActivity {
 
                 }
                 else{
-                    Toast myToast = Toast.makeText(DownloadOptions.this, "That link is invalid", Toast.LENGTH_SHORT);
+                    Toast myToast = Toast.makeText(DownloadOptions.this, "That link is invalid" , Toast.LENGTH_SHORT);
                     myToast.show();
                     finish();
                 }
@@ -126,7 +126,7 @@ public class DownloadOptions extends AppCompatActivity {
             myToast.show();
         }
         else{
-            final String url;
+            String url;
             if (savedInstanceState == null && Intent.ACTION_SEND.equals(getIntent().getAction()) && getIntent().getType() != null && "text/plain".equals(getIntent().getType())) {
                 url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
             }

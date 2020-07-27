@@ -65,7 +65,9 @@ public class YoutubeSearch extends AppCompatActivity {
             }
             else{
                 Intent downloadIntent = new Intent(YoutubeSearch.this, DownloadOptions.class);
-                downloadIntent.putExtra("videoUrl", "https://youtube.com/watch?v=" + id);
+                Toast myToast = Toast.makeText(YoutubeSearch.this, id, Toast.LENGTH_SHORT);
+                myToast.show();
+                downloadIntent.putExtra("videoUrl", "https://ww.wyoutube.com/watch?v=" + id);
 
                 startActivity(downloadIntent);
                 finish();
