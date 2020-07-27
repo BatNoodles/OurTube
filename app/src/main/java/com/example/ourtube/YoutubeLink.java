@@ -4,15 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import at.huber.youtubeExtractor.VideoMeta;
-import at.huber.youtubeExtractor.YouTubeExtractor;
-import at.huber.youtubeExtractor.YtFile;
 
 public class YoutubeLink extends AppCompatActivity {
 
@@ -25,7 +19,7 @@ public class YoutubeLink extends AppCompatActivity {
         setContentView(R.layout.activity_youtube_link);
 
         final Button downloadButton = findViewById(R.id.downloadButton);
-        final EditText linkEditText = findViewById(R.id.videoLinkTextEdit);
+        final EditText linkEditText = findViewById(R.id.videoNameTextEdit);
 
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
