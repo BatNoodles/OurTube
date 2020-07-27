@@ -133,7 +133,6 @@ public class DownloadOptions extends AppCompatActivity {
             else{
                 url = intent.getStringExtra("videoUrl");
             }
-
             downloadVideo(url);
 
 

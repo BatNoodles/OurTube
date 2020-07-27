@@ -27,6 +27,7 @@ public class YoutubeLink extends AppCompatActivity {
                 String editContent = linkEditText.getText().toString();
                 if (editContent.equals("") != true){
                     Intent downloadIntent = new Intent(YoutubeLink.this, DownloadOptions.class);
+                    String url = editContent.replace("https://www.youtube.com/", "https://youtu.be/");
                     downloadIntent.putExtra("videoUrl", editContent);
                     startActivity(downloadIntent);
                     finish();
