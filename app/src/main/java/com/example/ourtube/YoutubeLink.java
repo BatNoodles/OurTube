@@ -19,7 +19,7 @@ public class YoutubeLink extends AppCompatActivity {
         setContentView(R.layout.activity_youtube_link);
 
         final Button downloadButton = findViewById(R.id.downloadButton);
-        final EditText linkEditText = findViewById(R.id.videoNameTextEdit);
+        final EditText linkEditText = findViewById(R.id.inputLinkTextEdit);
 
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override

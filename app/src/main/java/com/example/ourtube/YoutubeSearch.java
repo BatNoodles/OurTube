@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 
 public class YoutubeSearch extends AppCompatActivity {
     class MyTask extends AsyncTask<Void, Void, String>{
-        final EditText searchText = findViewById(R.id.videoNameTextEdit);
+        final EditText searchText = findViewById(R.id.inputNameTextEdit);
         final Button downloadButton = findViewById(R.id.downloadButton);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         @Override
