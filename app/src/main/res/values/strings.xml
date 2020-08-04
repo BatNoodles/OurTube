@@ -9,4 +9,5 @@
     <string name="download">Download</string>
     <string name="enter_search_term">Enter video name</string>
     <string name="text_temp">temp text</string>
+    <string name="spotify_link">Enter Spotify link</string>
 </resources>
