@@ -16,6 +16,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -44,8 +45,13 @@ public class SpotifyLink extends AppCompatActivity {
                     Pattern p = Pattern.compile("https://open.spotify.com/track/[^\"]*");
                     Matcher m = p.matcher(docString);
                     return m.find();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                }catch(IllegalArgumentException e){
+                    //e.printStackTrace();
+                    Log.d("PENIS", "Penis");
+                    return false;
+                }
+                catch (IOException e ){
+                    //e.printStackTrace();
                     return false;
                 }
 
