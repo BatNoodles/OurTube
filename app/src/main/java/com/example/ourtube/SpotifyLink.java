@@ -2,12 +2,14 @@ package com.example.ourtube;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -27,17 +29,13 @@ public class SpotifyLink extends AppCompatActivity {
         setContentView(R.layout.activity_spotify_link);
 
 
-
-
-        class MyTask extends AsyncTask<Void, Void, String>{
+        class MyTask extends AsyncTask<Void,Void,Boolean>{
             final EditText linkEditText = findViewById(R.id.inputSpotifyLink);
-
             @Override
-            protected String doInBackground(Void... voids) {
-                final String url = linkEditText.getText().toString();
-                List<String> songIDs = new ArrayList<String>();
+            protected Boolean doInBackground(Void... voids) {
+                Connection.Response response = null;
                 try {
-                    Connection.Response response = Jsoup.connect(url)
+                    response = Jsoup.connect(linkEditText.getText().toString())
                             .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                             .referrer("http://www.google.com")
                             .execute();
@@ -45,46 +43,27 @@ public class SpotifyLink extends AppCompatActivity {
                     String docString = doc.toString();
                     Pattern p = Pattern.compile("https://open.spotify.com/track/[^\"]*");
                     Matcher m = p.matcher(docString);
-                    while(m.find()){
-                        String songUrl = m.group();
-                        Connection.Response songResponse = Jsoup.connect(songUrl)
-                                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                                .referrer("http://www.google.com")
-                                .execute();
-                        Document songDoc = songResponse.parse();
-
-                        p = Pattern.compile(".+?(?=, a)");
-                        Matcher songm = p.matcher(songDoc.title());
-                        if (songm.find()){
-                            String songName = songm.group();
-
-                            Connection.Response ytresponse = Jsoup.
-                                    connect("https://www.youtube.com/results").
-                                    data("search_query", songName)
-                                    .execute();
-                            Document ytdoc = ytresponse.parse();
-                            String rx = "videoId\":\".*?\"";
-                            Pattern ytp = Pattern.compile(rx);
-                            Matcher ytm = ytp.matcher(ytdoc.toString());
-                            if(ytm.find()){
-                                songIDs.add(ytm.group().substring(10,21));
-                            }
-                        }
-
-                    }
+                    return m.find();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    finish();
+                    return false;
                 }
 
-
-                return  url;
             }
-            protected void onPostExecute(String id){
 
-
+            protected void onPostExecute(Boolean valid){
+                if (valid){
+                    Intent spotifyIntent = new Intent(SpotifyLink.this, SpotifyQueue.class);
+                    spotifyIntent.putExtra("url", linkEditText.getText().toString());
+                    startActivity(spotifyIntent);
+                }
+                else{
+                    Toast myToast = Toast.makeText(SpotifyLink.this, "Error: Not a valid link", Toast.LENGTH_SHORT);
+                    myToast.show();
+                }
             }
         }
+
 
 
         final Button downloadButton = findViewById(R.id.downloadButton);
