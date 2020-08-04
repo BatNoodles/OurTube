@@ -35,22 +35,42 @@ public class SpotifyLink extends AppCompatActivity {
             @Override
             protected String doInBackground(Void... voids) {
                 final String url = linkEditText.getText().toString();
-
+                List<String> songIDs = new ArrayList<String>();
                 try {
-                    Connection.Response response = Jsoup.connect(url).execute();
+                    Connection.Response response = Jsoup.connect(url)
+                            .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                            .referrer("http://www.google.com")
+                            .execute();
                     Document doc = response.parse();
                     String docString = doc.toString();
                     Pattern p = Pattern.compile("https://open.spotify.com/track/[^\"]*");
                     Matcher m = p.matcher(docString);
                     while(m.find()){
                         String songUrl = m.group();
-
-                        Connection.Response songResponse = Jsoup.connect(songUrl).execute();
+                        Connection.Response songResponse = Jsoup.connect(songUrl)
+                                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                                .referrer("http://www.google.com")
+                                .execute();
                         Document songDoc = songResponse.parse();
 
-                        p = Pattern.compile(".+?(?= - )");
-                        m = p.matcher(songDoc.title());
-                        Log.d("SONG", m.group());
+                        p = Pattern.compile(".+?(?=, a)");
+                        Matcher songm = p.matcher(songDoc.title());
+                        if (songm.find()){
+                            String songName = songm.group();
+
+                            Connection.Response ytresponse = Jsoup.
+                                    connect("https://www.youtube.com/results").
+                                    data("search_query", songName)
+                                    .execute();
+                            Document ytdoc = ytresponse.parse();
+                            String rx = "videoId\":\".*?\"";
+                            Pattern ytp = Pattern.compile(rx);
+                            Matcher ytm = ytp.matcher(ytdoc.toString());
+                            if(ytm.find()){
+                                songIDs.add(ytm.group().substring(10,21));
+                            }
+                        }
+
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
