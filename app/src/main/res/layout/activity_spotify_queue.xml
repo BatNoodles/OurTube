@@ -46,5 +46,12 @@
         android:layout_height="457dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mottoTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/mottoTextView" >
+
+        <LinearLayout
+            android:id="@+id/buttonLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

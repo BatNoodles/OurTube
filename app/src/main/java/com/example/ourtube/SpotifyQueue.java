@@ -14,6 +14,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -55,8 +56,8 @@ public class SpotifyQueue extends AppCompatActivity {
                         if(ytFiles.get(itag).getFormat().getHeight() == -1 && !ytFiles.get(itag).getFormat().getExt().equals("webm")){
                             final YtFile file = ytFiles.get(itag);
                             final Button button = new Button(SpotifyQueue.this);
-                            final ScrollView scrollView = findViewById(R.id.cardScrollView);
-                            button.setText("test " + videoMeta.getTitle());
+                            final LinearLayout linearLayout = findViewById(R.id.buttonLinearLayout);
+                            button.setText(videoMeta.getTitle());
                             button.setBackgroundResource(R.drawable.red_button);
 
                             button.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +79,7 @@ public class SpotifyQueue extends AppCompatActivity {
                                 }
                             });
 
-                            scrollView.addView(button);
+                            linearLayout.addView(button);
                         }
                     }
                 }catch (NullPointerException e){
