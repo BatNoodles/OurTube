@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jsoup.Connection;
@@ -27,6 +28,7 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -177,5 +179,17 @@ public class SpotifyQueue extends AppCompatActivity {
             String url = intent.getStringExtra("url");
             new MyTask().execute(url);
         }
+        final TextView loadingTextView = findViewById(R.id.loadingTextView);
+        final String[] array = {"Loading...", "This might take a while", "Getting songs", "Finding urls", "Connecting to Youtube", "Thinking", "Calculating", "Generating download buttons"};
+        final String[] altArray = {"It's better to cum in the sink than sink in the cum", "It ain't gay if the balls aren't touching", "Call your friends. They miss you", "So, you come here often", "Yar har", "I'm calling the police"};
+        final Random generator = new Random();
+
+        loadingTextView.post(new Runnable() {
+            @Override
+            public void run() {
+                loadingTextView.setText(generator.nextInt(50) == 0?altArray[generator.nextInt(altArray.length)]:array[generator.nextInt(array.length)]);
+                loadingTextView.postDelayed(this, 5000);
+            }
+        });
     }
 }
