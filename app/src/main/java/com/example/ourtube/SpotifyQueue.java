@@ -2,11 +2,19 @@ package com.example.ourtube;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.util.SparseArray;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import org.jsoup.Connection;
@@ -19,7 +27,66 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import at.huber.youtubeExtractor.VideoMeta;
+import at.huber.youtubeExtractor.YouTubeExtractor;
+import at.huber.youtubeExtractor.YtFile;
+
+
+
 public class SpotifyQueue extends AppCompatActivity {
+
+
+
+
+    public void addButton(final String id) {
+        new YouTubeExtractor(SpotifyQueue.this){
+
+
+            @Override
+
+            protected void onExtractionComplete(SparseArray<YtFile> ytFiles, final VideoMeta videoMeta) {
+                System.out.println(id);
+                try{
+                    for (int i = 0, itag; i < ytFiles.size(); i++){
+                        itag = ytFiles.keyAt(i);
+                        if (ytFiles.get(itag) == null){
+                            Log.d("ERROR", "File is null");
+                        }
+                        if(ytFiles.get(itag).getFormat().getHeight() == -1 && !ytFiles.get(itag).getFormat().getExt().equals("webm")){
+                            final YtFile file = ytFiles.get(itag);
+                            final Button button = new Button(SpotifyQueue.this);
+                            final ScrollView scrollView = findViewById(R.id.cardScrollView);
+                            button.setText("test " + videoMeta.getTitle());
+                            button.setBackgroundResource(R.drawable.red_button);
+
+                            button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    final String filename = videoMeta.getTitle() + "."  + file.getFormat().getExt();
+                                    final Uri uri = Uri.parse(file.getUrl());
+                                    final DownloadManager.Request request = new DownloadManager.Request(uri);
+                                    final DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "OurTube/" + filename);
+
+                                    manager.enqueue(request);
+
+                                    Toast myToast = Toast.makeText(SpotifyQueue.this, "Downloading: " + filename, Toast.LENGTH_SHORT);
+                                    myToast.show();
+
+                                }
+                            });
+
+                            scrollView.addView(button);
+                        }
+                    }
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                    Log.d("ERROR", id);
+                }}
+        }.extract(id, true, true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +94,7 @@ public class SpotifyQueue extends AppCompatActivity {
         setContentView(R.layout.activity_spotify_queue);
         class MyTask extends AsyncTask<String, Void, List<String>> {
             final EditText linkEditText = findViewById(R.id.inputSpotifyLink);
-
+            VideoData data;
             @Override
             protected List<String> doInBackground(String ...params) {
                 final String url = params[0];
@@ -63,7 +130,7 @@ public class SpotifyQueue extends AppCompatActivity {
                             Pattern ytp = Pattern.compile(rx);
                             Matcher ytm = ytp.matcher(ytdoc.toString());
                             if(ytm.find()){
-                                songIDs.add(ytm.group().substring(10,21));
+                                songIDs.add("https://youtube.com/watch?v=" + ytm.group().substring(10,21));
                             }
                         }
 
@@ -77,7 +144,8 @@ public class SpotifyQueue extends AppCompatActivity {
             }
             protected void onPostExecute(List<String> ids){
                 for (int i = 0; i < ids.toArray(new String[0]).length; i++){
-                    Log.d("SONG", ids.get(i));
+                        addButton(ids.get(i));
+
                 }
             }
         }

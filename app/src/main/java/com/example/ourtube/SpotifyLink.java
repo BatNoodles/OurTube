@@ -46,12 +46,11 @@ public class SpotifyLink extends AppCompatActivity {
                     Matcher m = p.matcher(docString);
                     return m.find();
                 }catch(IllegalArgumentException e){
-                    //e.printStackTrace();
-                    Log.d("PENIS", "Penis");
+                    e.printStackTrace();
                     return false;
                 }
                 catch (IOException e ){
-                    //e.printStackTrace();
+                    e.printStackTrace();
                     return false;
                 }
 
