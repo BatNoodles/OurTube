@@ -52,6 +52,7 @@ public class SpotifyQueue extends AppCompatActivity {
                 System.out.println(id);
                 final LinearLayout linearLayout = findViewById(R.id.buttonLinearLayout);
                 final ProgressBar progressBar = findViewById(R.id.progressBar);
+                final TextView loadingTextView = findViewById(R.id.loadingTextView);
                 try{
 
                     for (int i = 0, itag; i < ytFiles.size(); i++){
@@ -62,11 +63,10 @@ public class SpotifyQueue extends AppCompatActivity {
                         if(ytFiles.get(itag).getFormat().getHeight() == -1 && !ytFiles.get(itag).getFormat().getExt().equals("webm")){
                             final YtFile file = ytFiles.get(itag);
                             final Button button = new Button(SpotifyQueue.this);
-
+                            button.setVisibility(View.GONE);
                             button.setText(videoMeta.getTitle());
                             button.setBackgroundResource(R.drawable.red_button);
                             button.setTransformationMethod(null);
-                            button.setEnabled(false);
                             button.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -94,9 +94,10 @@ public class SpotifyQueue extends AppCompatActivity {
                     if (lastButton){
 
                         for (int i = 0; i < linearLayout.getChildCount(); i++){
-                            linearLayout.getChildAt(i).setEnabled(true);
+                            linearLayout.getChildAt(i).setVisibility(View.VISIBLE);
                         }
                         progressBar.setVisibility(View.GONE);
+                        loadingTextView.setVisibility(View.GONE);
                     }
                 }catch (NullPointerException e){
                     e.printStackTrace();
@@ -180,7 +181,7 @@ public class SpotifyQueue extends AppCompatActivity {
             new MyTask().execute(url);
         }
         final TextView loadingTextView = findViewById(R.id.loadingTextView);
-        final String[] array = {"Loading...", "This might take a while", "Getting songs", "Finding urls", "Connecting to Youtube", "Thinking", "Calculating", "Generating download buttons"};
+        final String[] array = {"Loading...", "This might take a while", "Getting songs", "Finding urls", "Connecting to Youtube", "Thinking...", "Calculating...", "Generating download buttons"};
         final String[] altArray = {"It's better to cum in the sink than sink in the cum", "It ain't gay if the balls aren't touching", "Call your friends. They miss you", "So, you come here often", "Yar har", "I'm calling the police"};
         final Random generator = new Random();
 
