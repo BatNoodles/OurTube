@@ -15,7 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.jsoup.Connection;
@@ -39,15 +41,17 @@ public class SpotifyQueue extends AppCompatActivity {
 
 
 
-    public void addButton(final String id) {
+    public void addButton(final String id, final Boolean lastButton) {
         new YouTubeExtractor(SpotifyQueue.this){
 
 
             @Override
-
             protected void onExtractionComplete(SparseArray<YtFile> ytFiles, final VideoMeta videoMeta) {
                 System.out.println(id);
+                final LinearLayout linearLayout = findViewById(R.id.buttonLinearLayout);
+                final ProgressBar progressBar = findViewById(R.id.progressBar);
                 try{
+
                     for (int i = 0, itag; i < ytFiles.size(); i++){
                         itag = ytFiles.keyAt(i);
                         if (ytFiles.get(itag) == null){
@@ -56,10 +60,11 @@ public class SpotifyQueue extends AppCompatActivity {
                         if(ytFiles.get(itag).getFormat().getHeight() == -1 && !ytFiles.get(itag).getFormat().getExt().equals("webm")){
                             final YtFile file = ytFiles.get(itag);
                             final Button button = new Button(SpotifyQueue.this);
-                            final LinearLayout linearLayout = findViewById(R.id.buttonLinearLayout);
+
                             button.setText(videoMeta.getTitle());
                             button.setBackgroundResource(R.drawable.red_button);
-
+                            button.setTransformationMethod(null);
+                            button.setEnabled(false);
                             button.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -80,13 +85,24 @@ public class SpotifyQueue extends AppCompatActivity {
                             });
 
                             linearLayout.addView(button);
+
                         }
+                    }
+
+                    if (lastButton){
+
+                        for (int i = 0; i < linearLayout.getChildCount(); i++){
+                            linearLayout.getChildAt(i).setEnabled(true);
+                        }
+                        progressBar.setVisibility(View.GONE);
                     }
                 }catch (NullPointerException e){
                     e.printStackTrace();
                     Log.d("ERROR", id);
                 }}
         }.extract(id, true, true);
+
+
     }
 
     @Override
@@ -145,9 +161,10 @@ public class SpotifyQueue extends AppCompatActivity {
             }
             protected void onPostExecute(List<String> ids){
                 for (int i = 0; i < ids.toArray(new String[0]).length; i++){
-                        addButton(ids.get(i));
-
+                        addButton(ids.get(i), i + 1 == ids.size()?true:false);
                 }
+
+
             }
         }
 
