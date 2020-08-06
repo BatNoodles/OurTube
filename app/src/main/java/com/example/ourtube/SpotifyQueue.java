@@ -182,13 +182,14 @@ public class SpotifyQueue extends AppCompatActivity {
         }
         final TextView loadingTextView = findViewById(R.id.loadingTextView);
         final String[] array = {"Loading...", "This might take a while", "Getting songs", "Finding urls", "Connecting to Youtube", "Thinking...", "Calculating...", "Generating download buttons"};
-        final String[] altArray = {"It's better to cum in the sink than sink in the cum", "It ain't gay if the balls aren't touching", "Call your friends. They miss you", "So, you come here often", "Yar har", "I'm calling the police"};
+        final String[] altArray = {"It's better to cum in the sink than sink in the cum", "It ain't gay if the balls aren't touching", "Call your friends. They miss you", "So, you come here often?", "Yar har", "I'm calling the police", "\n" +
+                "Захватить средства производства"};
         final Random generator = new Random();
 
         loadingTextView.post(new Runnable() {
             @Override
             public void run() {
-                loadingTextView.setText(generator.nextInt(50) == 0?altArray[generator.nextInt(altArray.length)]:array[generator.nextInt(array.length)]);
+                loadingTextView.setText(generator.nextInt(25) == 0?altArray[generator.nextInt(altArray.length)]:array[generator.nextInt(array.length)]);
                 loadingTextView.postDelayed(this, 5000);
             }
         });
