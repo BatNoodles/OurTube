@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.jsoup.Connection;
@@ -57,14 +58,20 @@ public class SpotifyLink extends AppCompatActivity {
             }
 
             protected void onPostExecute(Boolean valid){
+                final Button downloadButton = findViewById(R.id.downloadButton);
+                final ProgressBar progressBar = findViewById(R.id.progressBar);
                 if (valid){
                     Intent spotifyIntent = new Intent(SpotifyLink.this, SpotifyQueue.class);
                     spotifyIntent.putExtra("url", linkEditText.getText().toString());
                     startActivity(spotifyIntent);
+                    finish();
                 }
                 else{
                     Toast myToast = Toast.makeText(SpotifyLink.this, "Error: Not a valid link", Toast.LENGTH_SHORT);
                     myToast.show();
+
+                    downloadButton.setEnabled(true);
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         }
@@ -72,10 +79,12 @@ public class SpotifyLink extends AppCompatActivity {
 
 
         final Button downloadButton = findViewById(R.id.downloadButton);
-
+        final ProgressBar progressBar = findViewById(R.id.progressBar);
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                downloadButton.setEnabled(false);
                 new MyTask().execute();
             }
         });
