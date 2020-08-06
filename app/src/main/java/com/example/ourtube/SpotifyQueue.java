@@ -53,6 +53,7 @@ public class SpotifyQueue extends AppCompatActivity {
                 final LinearLayout linearLayout = findViewById(R.id.buttonLinearLayout);
                 final ProgressBar progressBar = findViewById(R.id.progressBar);
                 final TextView loadingTextView = findViewById(R.id.loadingTextView);
+                final Button downloadAllButton = findViewById(R.id.downloadAllButton);
                 try{
 
                     for (int i = 0, itag; i < ytFiles.size(); i++){
@@ -92,7 +93,7 @@ public class SpotifyQueue extends AppCompatActivity {
                     }
 
                     if (lastButton){
-
+                        downloadAllButton.setVisibility(View.VISIBLE);
                         for (int i = 0; i < linearLayout.getChildCount(); i++){
                             linearLayout.getChildAt(i).setVisibility(View.VISIBLE);
                         }
@@ -175,11 +176,13 @@ public class SpotifyQueue extends AppCompatActivity {
         if (intent == null){
             Toast myToast = Toast.makeText(this,"What the actual fuck have you done?",Toast.LENGTH_SHORT);
             myToast.show();
+            finish();
         }
         else{
             String url = intent.getStringExtra("url");
             new MyTask().execute(url);
         }
+        final Button downloadAllButton = findViewById(R.id.downloadAllButton);
         final TextView loadingTextView = findViewById(R.id.loadingTextView);
         final String[] array = {"Loading...", "This might take a while", "Getting songs", "Finding urls", "Connecting to Youtube", "Thinking...", "Calculating...", "Generating download buttons"};
         final String[] altArray = {"It's better to cum in the sink than sink in the cum", "It ain't gay if the balls aren't touching", "Call your friends. They miss you", "So, you come here often?", "Yar har", "I'm calling the police", "\n" +
@@ -191,6 +194,16 @@ public class SpotifyQueue extends AppCompatActivity {
             public void run() {
                 loadingTextView.setText(generator.nextInt(25) == 0?altArray[generator.nextInt(altArray.length)]:array[generator.nextInt(array.length)]);
                 loadingTextView.postDelayed(this, 5000);
+            }
+        });
+
+        downloadAllButton.setOnClickListener(new View.OnClickListener() {
+            final LinearLayout linearLayout = findViewById(R.id.buttonLinearLayout);
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < linearLayout.getChildCount(); i++){
+                    linearLayout.getChildAt(i).performClick();
+                }
             }
         });
     }
