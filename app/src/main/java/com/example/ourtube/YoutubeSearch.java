@@ -83,12 +83,16 @@ public class YoutubeSearch extends AppCompatActivity {
 
         final Button downloadButton = findViewById(R.id.downloadButton);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
+        final EditText linkText = findViewById(R.id.inputNameTextEdit);
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadButton.setEnabled(false);
-                progressBar.setVisibility(View.VISIBLE);
-                new MyTask().execute();
+                if (!linkText.getText().toString().equals("")){
+                    downloadButton.setEnabled(false);
+                    progressBar.setVisibility(View.VISIBLE);
+                    new MyTask().execute();
+                }
+
 
             }
         });
