@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Button ytLinkBtn = findViewById(R.id.ytLinkButton);
         final Button ytSearchBtn = findViewById(R.id.ytSearchButton);
-
+        final Button spotifyBtn = findViewById(R.id.spotifyButton);
         ytLinkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent changeIntent = new Intent(MainActivity.this, YoutubeSearch.class);
+                startActivity(changeIntent);
+            }
+        });
+
+        spotifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent changeIntent = new Intent(MainActivity.this, SpotifyLink.class);
                 startActivity(changeIntent);
             }
         });
