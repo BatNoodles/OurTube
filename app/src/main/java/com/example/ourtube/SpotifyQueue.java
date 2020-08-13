@@ -71,7 +71,7 @@ public class SpotifyQueue extends AppCompatActivity {
                             button.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    final String filename = videoMeta.getTitle() + "."  + file.getFormat().getExt();
+                                    final String filename = videoMeta.getTitle().replace("/", "\u2215") + "."  + file.getFormat().getExt();
                                     final Uri uri = Uri.parse(file.getUrl());
                                     final DownloadManager.Request request = new DownloadManager.Request(uri);
                                     final DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);

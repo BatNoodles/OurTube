@@ -39,7 +39,7 @@ public class DownloadOptions extends AppCompatActivity {
             public void onClick(View v) {
                 finish();
                 String downloadUrl = file.getUrl();
-                String filename = title + "." + file.getFormat().getExt();
+                String filename = title.replace("/", "\u2215") + "." + file.getFormat().getExt();
 
                 Toast myToast = Toast.makeText(DownloadOptions.this, "Downloading " + filename, Toast.LENGTH_SHORT);
                 myToast.show();
