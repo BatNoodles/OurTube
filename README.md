@@ -1,1 +1,1 @@
-A Youtube video downloader for Android. Dubiously legal, questionably Russian.
+Non-functioning youtube downloader app I made for fun during college.
